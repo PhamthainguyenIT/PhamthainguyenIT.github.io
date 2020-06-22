@@ -39,7 +39,7 @@ socket.on("SOMEONE_LEAVE",peerId => {
 // ******************************* peerjs START ******************************* //
 
 //init peer connect
-const peer = new Peer();
+const peer = new Peer({key: "peerjs",host : "mypeer2206.herokuapp.com", secure: true, port: 443});
 
 peer.on("open", id => {
     $("#peerid").append(id)
