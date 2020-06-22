@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Nguyen DemoVD</title>
+        <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap"
+        rel="stylesheet"
+        />
+      <link rel="stylesheet" href="./styles.css" />
+        <script src="jquery.js"></script>
+        <script src="peer.js"></script>
+        <script src="socket.io.dev.js"></script>
+    </head>
+    <body>
+
+        <header class="header">
+            <div class="logo-container">
+              <img src="./img/doge.png" alt="doge logo" class="logo-img" />
+              <h1 class="logo-text">
+                Nguyen<span class="logo-highlight">Dev</span>
+              </h1>
+            </div>
+          </header>
+
+        <div id="divSubmit" class="submitName-panel">
+            <br /><br />
+            <input type="text" id="txtUserName" placeholder="Enter your name" class="submitName-panel">
+            <button id="btnSubmit" > Sumit</button>
+        </div>
+
+        <div id="divChat" class="submitName-panel" >
+            <p class="active-users-panel">Online User : </p>
+            <ul id="ulUser"></ul>
+            <h3 id="peerid">your ID: </h3>
+
+            <div id="divVideo">
+              <video id="localStream" width="300" controls></video>
+              <br /><br />
+              <video id="remoteStream" width="300" controls></video>
+            </div>
+        </div>
+    </body>
+    <script src="main.js"></script>
+</html>
