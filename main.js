@@ -1,6 +1,6 @@
 //init socket connect
 const socket = io("https://simplevd-devnguyen.herokuapp.com");
-
+var localId;
 let customConfig;
 
 $.ajax({
@@ -32,12 +32,12 @@ socket.on("LIST_ONLINE", arrUserList => {
     // update all list.
     arrUserList.forEach(user => {
         const { name, peerId } = user;
-        $("#ulUser").append(`<li id="${peerId}">${name}</li>`);
+        $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}</li>`);
     });
     // update new user.
     socket.on("UPDATE_NEW_USER", user => {
         const { name, peerId } = user;
-            $("#ulUser").append(`<li id="${peerId}">${name}</li>`);
+            $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}</li>`);
     });
 });
 
@@ -64,7 +64,6 @@ const peer = new Peer({
     secure: true, 
     port: 443, 
     config: customConfig});
-
 console.log("using sturn server");
 
 // //init peer connect
@@ -73,9 +72,14 @@ console.log("using sturn server");
 
 peer.on("open", id => {
     $("#peerid").append(id)
+    localId = id;
     //Submit Name
     $("#btnSubmit").click(()=> {
         const userName = $("#txtUserName").val();
+        if(userName == null || userName == ""){
+            alert("Please input your name");
+            return false;
+        }
         socket.emit("CLIEN_SUBMIT",{name: userName, peerId: id });
     });
 
@@ -107,7 +111,7 @@ peer.on("call", call => {
 // ******************************* peerjs END ******************************* //
 
 function openStream() {
-    const config = { audio: false, video: true };
+    const config = { audio: true, video: true };
     return navigator.mediaDevices.getUserMedia(config);
 }
 
@@ -118,8 +122,13 @@ function playStream(idVideoTag, stream){
 }
 
 $("#ulUser").on("click", `li`, function (){
-    $("#divVideo").show();
     const id =  $(this).attr('id');
+    if(localId===id){
+        return false;
+    }
+    $("#divVideo").show();
+    const name =  this.innerHTML;
+    document.getElementById("CallingTo").innerHTML = "you calling: " + name
     openStream()
     .then(stream => {
         playStream("localStream",stream);
@@ -128,3 +137,14 @@ $("#ulUser").on("click", `li`, function (){
     });
     
 })
+
+//add event press key enter for btn submit name
+var input = document.getElementById("txtUserName");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("btnSubmit").click();
+  }
+});
+
+

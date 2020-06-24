@@ -14,29 +14,45 @@
         <script src="peer.js"></script>
         <script src="socket.io.dev.js"></script>
     </head>
+
     <body>
 
         <header class="header">
-            <div class="logo-container">
-              <img src="./img/doge.png" alt="doge logo" class="logo-img" />
-              <h1 class="logo-text">
-                Nguyen<span class="logo-highlight">Dev</span>
-              </h1>
-            </div>
+                <div class="logo-container">
+                  <img src="./img/doge.png" alt="doge logo" class="logo-img" />
+                  <h1 class="logo-text">
+                    Nguyen<span class="logo-highlight">Dev</span>
+                  </h1>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.js"></script>
+      
+                <div id="loadingScreen"></div>
+                <!-- add class loader to container -->
+      
+                <div class="sk-cube-grid">
+                  <div class="sk-cube sk-cube1"></div>
+                  <div class="sk-cube sk-cube2"></div>
+                  <div class="sk-cube sk-cube3"></div>
+                  <div class="sk-cube sk-cube4"></div>
+                  <div class="sk-cube sk-cube5"></div>
+                  <div class="sk-cube sk-cube6"></div>
+                  <div class="sk-cube sk-cube7"></div>
+                  <div class="sk-cube sk-cube8"></div>
+                  <div class="sk-cube sk-cube9"></div>
+                </div>
+              </div>
           </header>
-
         <div id="divSubmit" class="submitName-panel">
             <br /><br />
             <input type="text" id="txtUserName" placeholder="Enter your name" class="submitName-panel">
             <button id="btnSubmit" > Sumit</button>
         </div>
 
-        <div id="divChat" class="submitName-panel" >
+        <div id="divChat" class="chat-panel" >
             <p class="active-users-panel">Online User : </p>
-            <ul id="ulUser"></ul>
-            <h3 id="peerid">your ID: </h3>
-
-            <div id="divVideo" >
+            <ul id="ulUser" class="ul-style"></ul>
+            <h3 id="CallingTo"></h3>
+            <div id="divVideo">
               <video id="localStream" width="300" controls></video>
               <br /><br />
               <video id="remoteStream" width="300" controls></video>

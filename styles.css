@@ -46,11 +46,15 @@ body {
   margin-left: 30px;
   width: 300px;
   height: 100%;
-  border-right: 1px solid #cddfe7;
 }
 
 .submitName-panel {
   margin-left: 30px;
+}
+
+.chat-panel{
+  display: none;
+  margin-left: 30px; 
 }
 
 .panel-title {
@@ -87,24 +91,82 @@ body {
   position: relative;
 }
 
-.talk-info {
-  font-weight: 500;
-  font-size: 21px;
+.ul-style {
+  line-height:180%;
+  width: 150px;
 }
 
-.remote-video {
-  border: 1px solid #cddfe7;
-  width: 58%;
-  height: 58%;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+.li-style {
+  cursor: pointer;
 }
 
-.local-video {
-  position: absolute;
-  border: 1px solid #cddfe7;
-  bottom: 60px;
-  right: 40px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  width: 300px;
+.li-style:hover {
+  background: #e1e1e1;
+  border-top: 1px solid #d0d0d0;
+  padding-top:0;
+}
+
+#app:not(:empty) + .sk-cube-grid {
+  display: none;
+}
+
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #333;
+  float: left;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+.sk-cube-grid .sk-cube1 {
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube2 {
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube3 {
+  animation-delay: 0.4s;
+}
+
+.sk-cube-grid .sk-cube4 {
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube5 {
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube6 {
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube7 {
+  animation-delay: 0s;
+}
+
+.sk-cube-grid .sk-cube8 {
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube9 {
+  animation-delay: 0.2s;
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%,
+  70%,
+  100% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    transform: scale3D(0, 0, 1);
+  }
 }
