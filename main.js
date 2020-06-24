@@ -1,6 +1,26 @@
 //init socket connect
 const socket = io("https://simplevd-devnguyen.herokuapp.com");
 
+let customConfig;
+
+$.ajax({
+    url: "https://service.xirsys.com/ice",
+    data: {
+      ident: "thainguyen",
+      secret: "2ab04b80-b5c1-11ea-b5ca-0242ac150003",
+      domain: "phamthainguyenit.github.io",
+      application: "default",
+      room: "default",
+      secure: 1
+    },
+    success: function (data, status) {
+      // data.d is where the iceServers object lives
+      customConfig = data.d;
+      console.log(customConfig);
+    },
+    async: false
+  });
+
 $("#divChat").hide();
 $("#divVideo").hide();
 
@@ -29,8 +49,7 @@ socket.on("SUBMIT_FAIL",() => {
 });
 
 // remove offline user
-socket.on("SOMEONE_LEAVE",peerId => {
-    console.log(peerId);
+socket.on("SOMEONE_LEAVE", peerId => {
     $(`#${peerId}`).remove();
 });
 
@@ -39,7 +58,18 @@ socket.on("SOMEONE_LEAVE",peerId => {
 // ******************************* peerjs START ******************************* //
 
 //init peer connect
-const peer = new Peer({key: "peerjs",host : "mypeer2206.herokuapp.com", secure: true, port: 443});
+const peer = new Peer({
+    key: "peerjs", 
+    host: "mypeer2206.herokuapp.com", 
+    secure: true, 
+    port: 443, 
+    config: customConfig});
+
+console.log("using sturn server");
+
+// //init peer connect
+// const peer = new Peer({key: "peerjs", host: "mypeer2206.herokuapp.com", secure: true, port: 443});
+//console.log("using normal server");
 
 peer.on("open", id => {
     $("#peerid").append(id)
