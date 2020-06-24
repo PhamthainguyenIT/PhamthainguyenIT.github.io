@@ -12,7 +12,7 @@
       <link rel="stylesheet" href="./styles.css" />
         <script src="jquery.js"></script>
         <script src="peer.js"></script>
-        <script src="socket.io.dev.js"></script>
+        <script src="socket.io.js"></script>
     </head>
 
     <body>
@@ -26,10 +26,7 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.js"></script>
       
-                <div id="loadingScreen"></div>
-                <!-- add class loader to container -->
-      
-                <div class="sk-cube-grid">
+                <div class="sk-cube-grid" onclick="switchScreen()">
                   <div class="sk-cube sk-cube1"></div>
                   <div class="sk-cube sk-cube2"></div>
                   <div class="sk-cube sk-cube3"></div>
@@ -57,7 +54,17 @@
               <br /><br />
               <video id="remoteStream" width="300" controls></video>
             </div>
+            <div id="divMessage" >
+            <div id="messageLog" class="list-Message">
+            </div>
+            <div>
+              <input type="text" id="txtMesssage">
+              <input type="button" id="btnSend" value="Send">
+            </div>
+          </div>
         </div>
+
+
     </body>
     <script src="main.js"></script>
 </html>

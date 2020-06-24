@@ -1,7 +1,17 @@
 //init socket connect
-const socket = io("https://simplevd-devnguyen.herokuapp.com");
+const socket = io('https://simplevd-devnguyen.herokuapp.com');
 var localId;
+var name;
 let customConfig;
+var isvideo = true;
+
+
+$("#divChat").hide();
+$("#divVideo").hide();
+$("#divMessage").hide();
+//  $("#divChat").show();
+//  $("#divVideo").hide();
+//  $("#divMessage").show();
 
 $.ajax({
     url: "https://service.xirsys.com/ice",
@@ -21,9 +31,6 @@ $.ajax({
     async: false
   });
 
-$("#divChat").hide();
-$("#divVideo").hide();
-
 // ******************************* socket START ******************************* //
 // when server reponse update new user , handle here
 socket.on("LIST_ONLINE", arrUserList => {
@@ -41,8 +48,6 @@ socket.on("LIST_ONLINE", arrUserList => {
     });
 });
 
-
-
 // check name duplicate
 socket.on("SUBMIT_FAIL",() => {
     alert("Error : duplicate name");
@@ -52,6 +57,25 @@ socket.on("SUBMIT_FAIL",() => {
 socket.on("SOMEONE_LEAVE", peerId => {
     $(`#${peerId}`).remove();
 });
+
+/******for chat only ********/
+// update new message.
+socket.on("NEW_MESSAGE", user => {
+    let time = new Date().toLocaleString();
+    const { name, message } = user;
+    //$("#messageLog").append(`<li class="li-style"><span class="time-message">${time}</span><span class="message">${name+": " +message}</span></li> `);
+    $("#messageLog").append(`<li <table><tr><td><span class="time-message">${time}</span> </td><td><span class="message">${name+": " +message}</span> </td></tr></table></li> `);
+});
+
+// update new message.
+socket.on("NEW_USER_JOIN", user => {
+    let time = new Date().toLocaleString();
+    const { name } = user;
+    //$("#messageLog").append(`<li class="li-style"><span class="time-message">${time}</span><span class="message">${name+" Online"}</span></li> `);
+    $("#messageLog").append(`<li <table><tr><td><span class="time-message">${time}</span> </td><td><span class="message">${"User "+name+" Online"}</span> </td></tr></table></li> `);
+});
+/******for chat only ********/
+
 
 // ******************************* socket END******************************* //
 
@@ -68,7 +92,11 @@ console.log("using sturn server");
 
 // //init peer connect
 // const peer = new Peer({key: "peerjs", host: "mypeer2206.herokuapp.com", secure: true, port: 443});
-//console.log("using normal server");
+// console.log("using normal server");
+
+// //init peer connect
+// const peer = new Peer();
+// console.log("using local peer");
 
 peer.on("open", id => {
     $("#peerid").append(id)
@@ -76,14 +104,13 @@ peer.on("open", id => {
     //Submit Name
     $("#btnSubmit").click(()=> {
         const userName = $("#txtUserName").val();
+        name = userName;
         if(userName == null || userName == ""){
             alert("Please input your name");
             return false;
         }
         socket.emit("CLIEN_SUBMIT",{name: userName, peerId: id });
     });
-
-
 });
 
 //caller
@@ -139,12 +166,44 @@ $("#ulUser").on("click", `li`, function (){
 })
 
 //add event press key enter for btn submit name
-var input = document.getElementById("txtUserName");
-input.addEventListener("keyup", function(event) {
+var inputName = document.getElementById("txtUserName");
+inputName.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
    event.preventDefault();
    document.getElementById("btnSubmit").click();
   }
 });
+
+//add event press key enter for btn submit name
+var inputMessage = document.getElementById("txtMesssage");
+inputMessage.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("btnSend").click();
+  }
+});
+
+/***********switchScreen START************/
+function switchScreen() {
+    if(isvideo){
+        $("#divVideo").hide();
+        $("#divMessage").show();
+        isvideo = false;
+    }else{
+        $("#divMessage").hide();
+        isvideo = true;
+    }
+}
+
+$("#btnSend").click(()=> {
+    const message = $("#txtMesssage").val();
+
+    if(message == null || message == ""){
+        return false;
+    }
+    socket.emit("CLIEN_SEND_MESSAGE",{name: name, peerId: localId, message: message});
+});
+/***********switchScreen END************/
+
 
 
