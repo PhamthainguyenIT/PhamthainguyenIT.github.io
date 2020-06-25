@@ -1,6 +1,4 @@
 body {
-  margin: 0;
-  padding: 0;
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -65,29 +63,40 @@ body {
 }
 
 .list-Message {
+  line-height:150%;
   height: 100%;
+  width: 100%;
   min-height: 350px;
   border: 1px solid ;
 }
 
-.list-Message:hover {
+.message{
+  width: 100%;
+  margin-left: 20px;
+  word-wrap: break-word;
+}
+
+.message:hover{
   background: #e1e1e1;
   padding-top:0;
 }
 
-.message{
-  margin-left: 1%;
-  width: 100%;
-  word-wrap: break-word
+.name-message{
+  font-size: 19px;
+  margin-right: 5px;
+  font-weight: bold;
 }
 
 .time-message{
   border: 1px solid;
   background: #e1e1e1;
+  font-size: 13px;
+  font-style: italic;
 }
 
 .txtBox{
   margin-top: 2px;
+  margin-bottom: 20px;
 }
 
 #app:not(:empty) + .sk-cube-grid {
@@ -154,4 +163,11 @@ body {
   35% {
     transform: scale3D(0, 0, 1);
   }
+}
+
+footer {
+  width: 100%;
+  display: inline-block;
+  margin: 2em 0;
+  height: 70px;
 }

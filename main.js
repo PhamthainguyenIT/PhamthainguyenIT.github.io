@@ -4,7 +4,7 @@ var localId;
 var name;
 let customConfig;
 var isvideo = true;
-
+var content = document.querySelector('#content');
 
 $("#divChat").hide();
 $("#divVideo").hide();
@@ -59,19 +59,25 @@ socket.on("SOMEONE_LEAVE", peerId => {
 });
 
 /******for chat only ********/
-// update new message.
-socket.on("NEW_MESSAGE", user => {
-    let time = new Date().toLocaleString();
-    const { name, message } = user;
-    $("#messageLog").append(`<li <table><tr><td><wb class="time-message">${time}</wb> </td><td><wb class="message">${name+": " +message}</wb> </td></tr></table></li> `);
-});
+
 
 // update new message.
 socket.on("NEW_USER_JOIN", user => {
     let time = new Date().toLocaleString();
     const { name } = user;
-    $("#messageLog").append(`<li <table><tr><td><wb class="time-message">${time}</wb> </td><td><wb class="message">${"User "+name+" Online"}</wb> </td></tr></table></li> `);
+    $("#messageLog").append(`<li> <label  style"width: 300px;" >${time}</label > <wb>${"User "+name+" Online"}</wb></li> `);
 });
+
+// update new message.
+socket.on("NEW_MESSAGE", user => {
+    let time = new Date().toLocaleString();
+    const { name, message } = user;
+    $("#messageLog").append(`<li> <label  class="name-message">${name}</label ><label  class="time-message">${time}</label ><br><wb class="message">${message}</wb></li> `);
+    content.scrollTop = content.scrollHeight ;
+});
+
+
+
 /******for chat only ********/
 
 
