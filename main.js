@@ -63,16 +63,14 @@ socket.on("SOMEONE_LEAVE", peerId => {
 socket.on("NEW_MESSAGE", user => {
     let time = new Date().toLocaleString();
     const { name, message } = user;
-    //$("#messageLog").append(`<li class="li-style"><span class="time-message">${time}</span><span class="message">${name+": " +message}</span></li> `);
-    $("#messageLog").append(`<li <table><tr><td><span class="time-message">${time}</span> </td><td><span class="message">${name+": " +message}</span> </td></tr></table></li> `);
+    $("#messageLog").append(`<li <table><tr><td><wb class="time-message">${time}</wb> </td><td><wb class="message">${name+": " +message}</wb> </td></tr></table></li> `);
 });
 
 // update new message.
 socket.on("NEW_USER_JOIN", user => {
     let time = new Date().toLocaleString();
     const { name } = user;
-    //$("#messageLog").append(`<li class="li-style"><span class="time-message">${time}</span><span class="message">${name+" Online"}</span></li> `);
-    $("#messageLog").append(`<li <table><tr><td><span class="time-message">${time}</span> </td><td><span class="message">${"User "+name+" Online"}</span> </td></tr></table></li> `);
+    $("#messageLog").append(`<li <table><tr><td><wb class="time-message">${time}</wb> </td><td><wb class="message">${"User "+name+" Online"}</wb> </td></tr></table></li> `);
 });
 /******for chat only ********/
 
@@ -197,7 +195,7 @@ function switchScreen() {
 
 $("#btnSend").click(()=> {
     const message = $("#txtMesssage").val();
-
+    document.getElementById("txtMesssage").value = "";
     if(message == null || message == ""){
         return false;
     }
