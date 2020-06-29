@@ -65,7 +65,7 @@ socket.on("SOMEONE_LEAVE", peerId => {
 socket.on("NEW_USER_JOIN", user => {
     let time = new Date().toLocaleString();
     const { name } = user;
-    $("#messageLog").append(`<li> <label  style"width: 300px;" >${time}</label > <wb>${"User "+name+" Online"}</wb></li> `);
+    $("#messageLog").append(`<li> <label  style"width: 300px;" >${time}</label > User <wb class="name-message">${name}</wb>Online </li> `);
 });
 
 // update new message.
