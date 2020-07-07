@@ -5,13 +5,12 @@ var name;
 let customConfig;
 var isvideo = true;
 var content = document.querySelector('#content');
+var isvideo = false;
 
 $("#divChat").hide();
 $("#divVideo").hide();
 $("#divMessage").hide();
-//  $("#divChat").show();
-//  $("#divVideo").hide();
-//  $("#divMessage").show();
+
 
 $.ajax({
     url: "https://service.xirsys.com/ice",
@@ -39,12 +38,16 @@ socket.on("LIST_ONLINE", arrUserList => {
     // update all list.
     arrUserList.forEach(user => {
         const { name, peerId } = user;
-        $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}</li>`);
-    });
+        if(localId === peerId){
+            $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}</li>`);
+        }else{
+            $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}<button class="li-button" onclick="callAudio()">audio</button><button class="li-button" onclick="callVideo()">videoCall</button></li>`);
+        }
+ });
     // update new user.
     socket.on("UPDATE_NEW_USER", user => {
         const { name, peerId } = user;
-            $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}</li>`);
+            $("#ulUser").append(`<li id="${peerId}" class="li-style">${name}<button class="li-button" onclick="callAudio()">audio</button><button class="li-button" onclick="callVideo()">videoCall</button></li>`);
     });
 });
 
@@ -120,7 +123,7 @@ peer.on("open", id => {
 //caller
 $("#btncall").click(()=> {
     const id = $("#remoteId").val();
-    openStream()
+    openStream(isvideo)
     .then(stream => {
         playStream("localStream",stream);
         const call = peer.call(id,stream);
@@ -131,7 +134,7 @@ $("#btncall").click(()=> {
 //listener
 peer.on("call", call => {
     $("#divVideo").show();
-    openStream()
+    openStream(isvideo)
     .then(stream =>{
         call.answer(stream);
         playStream("localStream",stream);
@@ -141,8 +144,8 @@ peer.on("call", call => {
 
 // ******************************* peerjs END ******************************* //
 
-function openStream() {
-    const config = { audio: false, video: true };
+function openStream(isvideo) {
+    const config = { audio: true, video: isvideo };
     return navigator.mediaDevices.getUserMedia(config);
 }
 
@@ -153,14 +156,16 @@ function playStream(idVideoTag, stream){
 }
 
 $("#ulUser").on("click", `li`, function (){
+    const name =  this.innerHTML;
+    let time = new Date().toLocaleString();
+    $("#messageLog").append(`<li> <label  style"width: 300px;" >${time}</label > you calling:  <wb class="name-message">${name}</wb> </li> `);
     const id =  $(this).attr('id');
     if(localId===id){
         return false;
     }
     $("#divVideo").show();
-    const name =  this.innerHTML;
     document.getElementById("CallingTo").innerHTML = "you calling: " + name
-    openStream()
+    openStream(isvideo)
     .then(stream => {
         playStream("localStream",stream);
         const call = peer.call(id,stream);
@@ -188,15 +193,14 @@ inputMessage.addEventListener("keyup", function(event) {
 });
 
 /***********switchScreen START************/
-function switchScreen() {
-    if(isvideo){
-        $("#divVideo").hide();
-        $("#divMessage").show();
-        isvideo = false;
-    }else{
-        $("#divMessage").hide();
-        isvideo = true;
-    }
+function callAudio() {
+    isvideo = false;
+    $("#messageLog").append(`<li> <label  style"width: 300px;" >isvideo : ${isvideo} `);
+}
+
+function callVideo() {
+    isvideo = true;
+    $("#messageLog").append(`<li> <label  style"width: 300px;" >isvideo : ${isvideo} `);
 }
 
 $("#btnSend").click(()=> {

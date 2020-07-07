@@ -49,17 +49,26 @@ body {
 
 .ul-style {
   line-height:180%;
-  width: 150px;
+  width: 50%;
 }
 
 .li-style {
-  cursor: pointer;
+  cursor: default;
 }
 
 .li-style:hover {
-  background: #e1e1e1;
-  border-top: 1px solid #d0d0d0;
   padding-top:0;
+}
+
+.li-style:hover .li-button{
+  display: inline-block;
+  cursor: pointer;
+}
+
+.li-button {
+  display: none;
+  cursor: pointer;
+  margin-left: 10%;
 }
 
 .message{
